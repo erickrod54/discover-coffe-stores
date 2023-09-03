@@ -1,8 +1,8 @@
-/* Dicover-coffee-stores - version 1.00 - global.css - 
+/* Dicover-coffee-stores - version 1.02 - global.css - 
 * Features: 
 *
 *
-*    --> Adding styles sheet
+*    --> Adding GLOBAL.CSS to set white space.
 *
 *Note: this is the initial stylesheet 
 *
@@ -53,6 +53,7 @@ a {
   box-sizing: border-box;
 }
 
+/** GLOBAL.CSS **/
 p {
   font-weight: 500;
 }
