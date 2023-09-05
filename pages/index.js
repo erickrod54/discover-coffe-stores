@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css';
 import { Banner } from '../components/index.components'
+import Image from 'next/image'
+
 
 /**
  * Discover-coffee-stores - version 1.01 -  Home page ( index js )
@@ -28,6 +30,9 @@ export default function Home() {
 
       <main className={styles.main}>
         <Banner buttonText="View stores nearby" handleOnClick={handleOnBannerBtnClick}/>
+        <div className={styles.heroImage}>
+          <Image src='/statics/hero_image.png' width={650} height={550}/>
+        </div>
       </main>
 
     </div>
