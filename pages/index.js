@@ -1,14 +1,14 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css';
-import { Banner } from '../components/index.components'
+import { Banner, Card } from '../components/index.components'
 import Image from 'next/image'
 
 
 /**
- * Discover-coffee-stores - version 1.01 -  Home page ( index js )
+ * Discover-coffee-stores - version 1.07 -  Home page ( index js )
  * - Fetaures:
  * 
- *    --> Importing and placing Banner Component 
+ *    --> Importing and placing 'Card' Component 
  * 
  * Note: i create here the handlers and apply prop drilling to 
  * make the component re-usable
@@ -33,6 +33,11 @@ export default function Home() {
         <div className={styles.heroImage}>
           <Image src='/statics/hero_image.png' width={650} height={550}/>
         </div>
+        <Card 
+          name='DarkHorse Coffee'
+          imgUrl='/statics/hero_image.png'
+          href='/coffee-store/darkhorse-coffee'
+        />
       </main>
 
     </div>
