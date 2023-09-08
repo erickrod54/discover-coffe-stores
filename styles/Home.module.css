@@ -1,10 +1,10 @@
-/* Dicover-coffee-stores - version 1.08 - global.css - 
+/* Dicover-coffee-stores - version 1.09 - global.css - 
 * Features: 
 *
 *
 *    --> Implementing 'Mobile first development'
 *
-*    --> Writting 'card' and 'cardLayout'
+*    --> Writting 'cardLayout' for 640px
 *
 *Note: This first styles are mobile first and then 
 *will be written styles for bigger screens.
@@ -63,6 +63,10 @@
     margin-top: 3rem /* 48px */;
     padding-left: 1.5rem /* 24px */;
     padding-right: 1.5rem /* 24px */;
+  }
+
+  .cardLayout{
+    grid-template-columns: repeat(2, minmax(0,1fr));
   }
 }
 
