@@ -1,10 +1,10 @@
-/* Dicover-coffee-stores - version 1.09 - global.css - 
+/* Dicover-coffee-stores - version 1.11 - global.css - 
 * Features: 
 *
 *
 *    --> Implementing 'Mobile first development'
 *
-*    --> Writting 'cardLayout' for 640px
+*    --> Writting 'cardLayout' for 768px
 *
 *Note: This first styles are mobile first and then 
 *will be written styles for bigger screens.
@@ -82,6 +82,10 @@
 
   .heroImage{
     right: 20%;
+  }
+
+  .cardLayout{
+    grid-template-columns: repeat(2, minmax(0,1fr));
   }
 }
 
