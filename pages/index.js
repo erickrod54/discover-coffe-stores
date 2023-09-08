@@ -5,13 +5,13 @@ import Image from 'next/image'
 
 
 /**
- * Discover-coffee-stores - version 1.07 -  Home page ( index js )
+ * Discover-coffee-stores - version 1.08 -  Home page ( index js )
  * - Fetaures:
  * 
- *    --> Importing and placing 'Card' Component 
+ *    --> Adding styles 'cardLayout' and  'card'
  * 
- * Note: i create here the handlers and apply prop drilling to 
- * make the component re-usable
+ * Note: This styles are grid layout based thinking in mobile
+ * first
  */
 
 
@@ -33,11 +33,20 @@ export default function Home() {
         <div className={styles.heroImage}>
           <Image src='/statics/hero_image.png' width={650} height={550}/>
         </div>
-        <Card 
-          name='DarkHorse Coffee'
-          imgUrl='/statics/hero_image.png'
-          href='/coffee-store/darkhorse-coffee'
-        />
+        <div className={styles.cardLayout}>
+          <Card 
+            className={styles.card}
+            name='DarkHorse Coffee'
+            imgUrl='/statics/hero_image.png'
+            href='/coffee-store/darkhorse-coffee'
+          />
+          <Card 
+            className={styles.card}
+            name='DarkHorse Coffee'
+            imgUrl='/statics/hero_image.png'
+            href='/coffee-store/darkhorse-coffee'
+          />
+        </div>
       </main>
 
     </div>
