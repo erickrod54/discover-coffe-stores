@@ -1,11 +1,13 @@
-/* Dicover-coffee-stores - version 1.02 - global.css - 
+/* Dicover-coffee-stores - version 1.08 - global.css - 
 * Features: 
 *
 *
 *    --> Implementing 'Mobile first development'
 *
-*Note: this concept is trend in make styles mobile 
-* oriented from the beginning.
+*    --> Writting 'card' and 'cardLayout'
+*
+*Note: This first styles are mobile first and then 
+*will be written styles for bigger screens.
 *
 **/
 
@@ -32,6 +34,17 @@
   z-index: 1;
 }
 
+.cardLayout{
+  margin-top: 25%;
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0,1fr));
+  column-gap: 1.5rem;
+  row-gap: 1.5rem;
+}
+
+.card{
+  justify-content: center;
+}
 /** Breakpoints:
   sm: min-width: 640px;
   md: min-width: 768px;
