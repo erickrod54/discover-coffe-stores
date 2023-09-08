@@ -1,8 +1,8 @@
-/* Dicover-coffee-stores - version 1.07 - card.module.css - 
+/* Dicover-coffee-stores - version 1.08 - card.module.css - 
 * Features: 
 *
 *
-*    --> Building and styling 'Card' module css.
+*    --> Removing margin top from .main.
 *
 *Note: this is the initial stylesheet 
 *
@@ -20,7 +20,6 @@
   }
   
   .container {
-    margin-top: 25%;
     border-radius: 0.75rem /* 12px */;
     padding-top: 0.25rem /* 4px */;
     padding-bottom: 0.25rem /* 4px */;
