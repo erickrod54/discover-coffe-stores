@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
-//import coffeeStores from './data/coffee-stores.json';
+import coffeeStores from './data/coffee-stores.json';
 
 
 /**
- * Discover-coffee-stores - version 1.12 -  context js
+ * Discover-coffee-stores - version 1.13 -  context js
  * - Fetaures:
  * 
- *    --> Building context js
+ *    --> Importing and providing 'coffeeStores'
  * 
  * Note: This styles are grid layout based thinking in mobile
  * first
@@ -15,13 +15,11 @@ import React, { useContext } from "react";
 
 const CoffeeStoresContext = React.createContext();
 
-const test = 'coffee stores api works!!'
-
 export const CoffeeStoresProvider = ({ children }) => {
 
     return(
         <CoffeeStoresContext.Provider
-            value={{test}}
+            value={{coffeeStores}}
         >
             {children}
         </CoffeeStoresContext.Provider>
