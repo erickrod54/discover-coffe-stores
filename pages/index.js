@@ -2,13 +2,14 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css';
 import { Banner, Card } from '../components/index.components'
 import Image from 'next/image'
+import { useCoffeeStoresContext } from '../context';
 
 
 /**
- * Discover-coffee-stores - version 1.08 -  Home page ( index js )
+ * Discover-coffee-stores - version 1.12 -  Home page ( index js )
  * - Fetaures:
  * 
- *    --> Adding styles 'cardLayout' and  'card'
+ *    --> testing context api
  * 
  * Note: This styles are grid layout based thinking in mobile
  * first
@@ -20,6 +21,11 @@ const handleOnBannerBtnClick = () => {
 }
 
 export default function Home() {
+
+  const { test } = useCoffeeStoresContext();
+
+  console.log('coffeeStores ==>', test)
+
   return (
     <div className={styles.container}>
       <Head>
