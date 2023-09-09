@@ -6,10 +6,10 @@ import { useCoffeeStoresContext } from '../context';
 
 
 /**
- * Discover-coffee-stores - version 1.12 -  Home page ( index js )
+ * Discover-coffee-stores - version 1.13 -  Home page ( index js )
  * - Fetaures:
  * 
- *    --> testing context api
+ *    --> Destrcuturing 'coffeeStores' from the context
  * 
  * Note: This styles are grid layout based thinking in mobile
  * first
@@ -22,9 +22,9 @@ const handleOnBannerBtnClick = () => {
 
 export default function Home() {
 
-  const { test } = useCoffeeStoresContext();
+  const { coffeeStores } = useCoffeeStoresContext();
 
-  console.log('coffeeStores ==>', test)
+  console.log('coffeeStores ==>', coffeeStores)
 
   return (
     <div className={styles.container}>
