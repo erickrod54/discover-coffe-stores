@@ -6,10 +6,10 @@ import { useCoffeeStoresContext } from '../context';
 
 
 /**
- * Discover-coffee-stores - version 1.13 -  Home page ( index js )
+ * Discover-coffee-stores - version 1.14 -  Home page ( index js )
  * - Fetaures:
  * 
- *    --> Destrcuturing 'coffeeStores' from the context
+ *    --> Maping each 'coffeeStore' from the JSON and rendering it
  * 
  * Note: This styles are grid layout based thinking in mobile
  * first
@@ -40,18 +40,18 @@ export default function Home() {
           <Image src='/statics/hero_image.png' width={650} height={550}/>
         </div>
         <div className={styles.cardLayout}>
-          <Card 
-            className={styles.card}
-            name='DarkHorse Coffee'
-            imgUrl='/statics/hero_image.png'
-            href='/coffee-store/darkhorse-coffee'
-          />
-          <Card 
-            className={styles.card}
-            name='DarkHorse Coffee'
-            imgUrl='/statics/hero_image.png'
-            href='/coffee-store/darkhorse-coffee'
-          />
+          {coffeeStores.map((coffeeStore) => {
+            
+            return(
+              <Card 
+                key={coffeeStore.id}
+                className={styles.card}
+                name={coffeeStore.name}
+                imgUrl={coffeeStore.imgUrl}
+                href={`/coffee-store/${coffeeStore.id}`}
+              />
+            )
+          })}
         </div>
       </main>
 
