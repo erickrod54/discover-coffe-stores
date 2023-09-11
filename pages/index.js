@@ -2,30 +2,34 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css';
 import { Banner, Card } from '../components/index.components'
 import Image from 'next/image'
-import { useCoffeeStoresContext } from '../context';
-
-
+import coffeeStores from '../data/coffee-stores.json'
 /**
- * Discover-coffee-stores - version 1.14 -  Home page ( index js )
+ * Discover-coffee-stores - version 1.15 -  Home page ( index js )
  * - Fetaures:
  * 
- *    --> Maping each 'coffeeStore' from the JSON and rendering it
+ *    --> Implementing 'getStatictProps' server rendering in order 
+ *        to pre render images
  * 
  * Note: This styles are grid layout based thinking in mobile
  * first
- */
+*/
 
+
+export async function getStaticProps(context) {
+  
+  return{
+    props:{coffeeStores},// will be passed to the page component as props
+  }
+}
 
 const handleOnBannerBtnClick = () => {
   console.log("hi banner button!!")
 }
 
-export default function Home() {
-
-  const { coffeeStores } = useCoffeeStoresContext();
-
-  console.log('coffeeStores ==>', coffeeStores)
-
+export default function Home(props) {
+  
+  console.log('coffeeStores pre render ==>', props)
+  
   return (
     <div className={styles.container}>
       <Head>
