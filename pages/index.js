@@ -4,11 +4,11 @@ import { Banner, Card } from '../components/index.components'
 import Image from 'next/image'
 import coffeeStores from '../data/coffee-stores.json'
 /**
- * Discover-coffee-stores - version 1.15 -  Home page ( index js )
+ * Discover-coffee-stores - version 1.16 -  Home page ( index js )
  * - Fetaures:
  * 
- *    --> Implementing 'getStatictProps' server rendering in order 
- *        to pre render images
+ *    --> Placing the 'heading2' style class for the title of the
+ *        coffeeshop lists
  * 
  * Note: This styles are grid layout based thinking in mobile
  * first
@@ -43,20 +43,25 @@ export default function Home(props) {
         <div className={styles.heroImage}>
           <Image src='/statics/hero_image.png' width={650} height={550}/>
         </div>
-        <div className={styles.cardLayout}>
-          {coffeeStores.map((coffeeStore) => {
-            
-            return(
-              <Card 
-                key={coffeeStore.id}
-                className={styles.card}
-                name={coffeeStore.name}
-                imgUrl={coffeeStore.imgUrl}
-                href={`/coffee-store/${coffeeStore.id}`}
-              />
-            )
-          })}
-        </div>
+        {props.coffeeStores.length > 0 && (
+          <div className={styles.titleAndlist}>
+            <h2 className={styles.heading2}>Toronto stores</h2>
+            <div className={styles.cardLayout}>
+              {props.coffeeStores.map((coffeeStore) => {
+                
+                return(
+                  <Card 
+                    key={coffeeStore.id}
+                    className={styles.card}
+                    name={coffeeStore.name}
+                    imgUrl={coffeeStore.imgUrl}
+                    href={`/coffee-store/${coffeeStore.id}`}
+                  />
+                )
+              })}
+            </div>
+          </div>
+        )}
       </main>
 
     </div>
