@@ -4,15 +4,10 @@ import Link from "next/link"
 import coffeeStoresData from '../../data/coffee-stores.json'
 
 /**
- * Discover-coffee-stores - version 1.17 -  coffee-store-page
+ * Discover-coffee-stores - version 1.18 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Implementing 'getStaticProps'
- * 
- *    --> Implementing 'getStaticPaths'
- * 
- *    --> Destructuring props in the component to get 'name' and 'address' 
- *        of the coffeeShop store.
+ *    --> Modifying fallback to 'true' in order to set a loader
  * 
  * Note: conventions: [id] the name of the js file under 
  * the pages directory creates a dynamic route that can be
@@ -43,7 +38,7 @@ export function getStaticProps(staticProps) {
 export function getStaticPaths() {
     return {
       paths: [{ params: { id: "0" } }, { params: { id: "1" } }],
-      fallback: false,
+      fallback: true,
     };
   }
 
@@ -51,6 +46,10 @@ const CoffeStore = (props) => {
 
     const router = useRouter();
     //console.log("router ==>", router)
+
+    if (router.isFallback) {
+        return <div>Loading...</div>
+    }
 
     console.log(' coffee store props ==>', props)
     return(
