@@ -2,13 +2,12 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css';
 import { Banner, Card } from '../components/index.components'
 import Image from 'next/image'
-import coffeeStores from '../data/coffee-stores.json'
+import coffeeStoresData from '../data/coffee-stores.json'
 /**
- * Discover-coffee-stores - version 1.16 -  Home page ( index js )
+ * Discover-coffee-stores - version 1.17s -  Home page ( index js )
  * - Fetaures:
  * 
- *    --> Placing the 'heading2' style class for the title of the
- *        coffeeshop lists
+ *    --> Renaming the props as 'coffeeStores'
  * 
  * Note: This styles are grid layout based thinking in mobile
  * first
@@ -18,7 +17,7 @@ import coffeeStores from '../data/coffee-stores.json'
 export async function getStaticProps(context) {
   
   return{
-    props:{coffeeStores},// will be passed to the page component as props
+    props:{coffeeStores: coffeeStoresData},// will be passed to the page component as props
   }
 }
 
