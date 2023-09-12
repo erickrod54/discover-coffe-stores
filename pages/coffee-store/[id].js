@@ -1,13 +1,18 @@
 import React from "react";
 import { useRouter } from 'next/router'
 import Link from "next/link"
-
+import coffeeStoresData from '../../data/coffee-stores.json'
 
 /**
- * Discover-coffee-stores - version 1.02 -  coffee-store-page
+ * Discover-coffee-stores - version 1.17 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Building '[id]' dynamic route
+ *    --> Implementing 'getStaticProps'
+ * 
+ *    --> Implementing 'getStaticPaths'
+ * 
+ *    --> Destructuring props in the component to get 'name' and 'address' 
+ *        of the coffeeShop store.
  * 
  * Note: conventions: [id] the name of the js file under 
  * the pages directory creates a dynamic route that can be
@@ -19,11 +24,35 @@ import Link from "next/link"
  * gets reflected as '[id]'
  */
 
-const CoffeStore = () => {
+export function getStaticProps(staticProps) {
+
+    const params = staticProps.params
+
+    console.log('params ==>', params)
+    return{
+        props: {
+            coffeeStore: coffeeStoresData.find(coffeeStore => {
+                /**convert to string cause the id in the json it is an integer, and i'm comparing 
+                 * with the param that is a string */
+                return coffeeStore.id.toString() === params.id
+            })
+        }
+    }
+}
+
+export function getStaticPaths() {
+    return {
+      paths: [{ params: { id: "0" } }, { params: { id: "1" } }],
+      fallback: false,
+    };
+  }
+
+const CoffeStore = (props) => {
 
     const router = useRouter();
-    console.log("router ==>", router)
+    //console.log("router ==>", router)
 
+    console.log(' coffee store props ==>', props)
     return(
         <>
             <div> Coffe Store Page, the page is - {router.query.id}</div>
@@ -33,6 +62,8 @@ const CoffeStore = () => {
             <Link href="/coffee-store/dynamic">
                 Go to Page Dynamic
             </Link>
+            <p>{props.coffeeStore.address}</p>
+            <p>{props.coffeeStore.name}</p>
         </>
     )
 }
