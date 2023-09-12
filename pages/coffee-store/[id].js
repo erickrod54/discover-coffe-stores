@@ -4,10 +4,10 @@ import Link from "next/link"
 import coffeeStoresData from '../../data/coffee-stores.json'
 
 /**
- * Discover-coffee-stores - version 1.18 -  coffee-store-page
+ * Discover-coffee-stores - version 1.19 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Modifying fallback to 'true' in order to set a loader
+ *    --> Adding 'neighbourhood'
  * 
  * Note: conventions: [id] the name of the js file under 
  * the pages directory creates a dynamic route that can be
@@ -58,11 +58,9 @@ const CoffeStore = (props) => {
             <Link href="/">
                 Back to Home
             </Link>
-            <Link href="/coffee-store/dynamic">
-                Go to Page Dynamic
-            </Link>
             <p>{props.coffeeStore.address}</p>
             <p>{props.coffeeStore.name}</p>
+            <p>{props.coffeeStore.neighbourhood}</p>
         </>
     )
 }
