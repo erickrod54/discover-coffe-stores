@@ -5,12 +5,10 @@ import coffeeStoresData from '../../data/coffee-stores.json'
 import Head from "next/head";
 
 /**
- * Discover-coffee-stores - version 1.20 -  coffee-store-page
+ * Discover-coffee-stores - version 2.00 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Destructuring props from 'props.coffeeStore'
- * 
- *    --> Adding the 'Head 'with the 'title' name
+ *    --> Making the paths dynamic
  * 
  * Note: conventions: [id] the name of the js file under 
  * the pages directory creates a dynamic route that can be
@@ -39,8 +37,16 @@ export function getStaticProps(staticProps) {
 }
 
 export function getStaticPaths() {
+    
+    const paths = coffeeStoresData.map((coffeeStore) => {
+        return{
+            params:{
+                id: coffeeStore.id.toString()
+            }
+        }
+    })
     return {
-      paths: [{ params: { id: "0" } }, { params: { id: "1" } }],
+      paths,
       fallback: true,
     };
   }
