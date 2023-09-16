@@ -1,8 +1,8 @@
-/* Dicover-coffee-stores - version 1.07 - global.css - 
+/* Dicover-coffee-stores - version 2.02 - global.css - 
 * Features: 
 *
 *
-*    --> Adding 'glass' style.
+*    --> Removing 'height: 100%;'.
 *
 *Note: this is the initial stylesheet 
 *
@@ -20,7 +20,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   color: #373b64;
-  height: 100%;
+  
 }
 
 @font-face {
