@@ -3,22 +3,27 @@ import styles from '../styles/Home.module.css';
 import { Banner, Card } from '../components/index.components'
 import Image from 'next/image'
 import coffeeStoresData from '../data/coffee-stores.json'
+import { fetchCoffeeStores } from '../lib/coffee.stores';
 /**
- * Discover-coffee-stores - version 1.17s -  Home page ( index js )
+ * Discover-coffee-stores - version 2.02 -  Home page ( index js )
  * - Fetaures:
  * 
- *    --> Renaming the props as 'coffeeStores'
+ *    --> Implementing 'getStaticProps' to receive
+ *        the fetch data
  * 
- * Note: This styles are grid layout based thinking in mobile
- * first
+ * Note: the fetch data comes from the lib directory and consenquently
+ * from the API.
 */
 
 
 export async function getStaticProps(context) {
-  
-  return{
-    props:{coffeeStores: coffeeStoresData},// will be passed to the page component as props
-  }
+
+      const coffeeStores = await fetchCoffeeStores();
+      return {
+        props: {
+          coffeeStores: coffeeStores,
+        }
+      }
 }
 
 const handleOnBannerBtnClick = () => {
@@ -44,16 +49,19 @@ export default function Home(props) {
         </div>
         {props.coffeeStores.length > 0 && (
           <div className={styles.titleAndlist}>
-            <h2 className={styles.heading2}>Toronto stores</h2>
+            <h2 className={styles.heading2}>Boynton stores</h2>
             <div className={styles.cardLayout}>
-              {props.coffeeStores.map((coffeeStore) => {
-                
+              {props.coffeeStores.filter((diferrentDunkin) => diferrentDunkin.name !== `Dunkin'` && diferrentDunkin.name !== `Starbucks`).map((coffeeStore) => {
+
                 return(
+                  
                   <Card 
-                    key={coffeeStore.id}
+                    key={coffeeStore.fsq_id}
                     className={styles.card}
-                    name={coffeeStore.name}
-                    imgUrl={coffeeStore.imgUrl}
+                    name={coffeeStore.name === `Dunkin'` ? 'duplicate' : coffeeStore.name}
+                    imgUrl={coffeeStore.imgUrl ||
+                      "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+                    }
                     href={`/coffee-store/${coffeeStore.id}`}
                   />
                 )
