@@ -1,15 +1,15 @@
 /**
- * Discover-coffee-stores - version 1.02 -  banner.module.css
+ * Discover-coffee-stores - version 2.02-  banner.module.css
  * - Fetaures:
  * 
- *    --> Writting new styles for 'title' and 'title1'.
+ *    --> Clearing styles.
  * 
  * Note: this module will set styles for the banner 
  */
 
 .container {
     margin-bottom: 1rem;
-  }
+}
   
   .title {
     letter-spacing: -0.025em;
@@ -59,7 +59,7 @@
   }
   
   .button:hover {
-    background-color: var(--text-purple-dark);
+    background-color: var(--text-purple-dark); 
   }
 
   /** 
