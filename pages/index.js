@@ -1,18 +1,19 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css';
 import { Banner, Card } from '../components/index.components'
-import Image from 'next/image'
-import coffeeStoresData from '../data/coffee-stores.json'
+import Image from 'next/image';
 import { fetchCoffeeStores } from '../lib/coffee.stores';
 /**
- * Discover-coffee-stores - version 2.02 -  Home page ( index js )
+ * Discover-coffee-stores - version 2.03 -  Home page ( index js )
  * - Fetaures:
  * 
- *    --> Implementing 'getStaticProps' to receive
- *        the fetch data
+ *    --> Adding 'fsq_id' to the image href
  * 
- * Note: the fetch data comes from the lib directory and consenquently
- * from the API.
+ * Note: this 'fsq_id' will provide dynamic 'id' comming from the 
+ * API to the url:
+ * 
+ *      '/coffee-store/${coffeeStore.fsq_id}'
+ * 
 */
 
 
@@ -58,11 +59,11 @@ export default function Home(props) {
                   <Card 
                     key={coffeeStore.fsq_id}
                     className={styles.card}
-                    name={coffeeStore.name === `Dunkin'` ? 'duplicate' : coffeeStore.name}
+                    name={coffeeStore.fsq_id === `Dunkin'` ? 'duplicate' : coffeeStore.name}
                     imgUrl={coffeeStore.imgUrl ||
                       "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
                     }
-                    href={`/coffee-store/${coffeeStore.id}`}
+                    href={`/coffee-store/${coffeeStore.fsq_id}`}
                   />
                 )
               })}
