@@ -8,13 +8,12 @@ import cls from 'classnames'
 import { fetchCoffeeStores } from "../../lib/coffee.stores";
 
 /**
- * Discover-coffee-stores - version 2.03 -  coffee-store-page
+ * Discover-coffee-stores - version 2.04 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Switching from the dummy data to the API data
+ *    --> Clearing 'neighbourhood' from the destructure API.
  * 
- *    --> Implementing flow condition to get an image for 
- *        each coffee store.
+ *    --> Adding 'Address' and 'dma'
  * 
  * Note: conventions: [id] the name of the js file under 
  * the pages directory creates a dynamic route that can be
@@ -67,7 +66,7 @@ const CoffeStore = (props) => {
     if (router.isFallback) {
         return <div>Loading...</div>
     }
-    const { address, name, neighbourhood, imgUrl } = props.coffeeStore;
+    const { location, name, imgUrl } = props.coffeeStore;
     
     console.log(' coffee store props ==>', props)
     return(
@@ -93,11 +92,11 @@ const CoffeStore = (props) => {
                 <div className={cls("glass",styles.col2)}>
                     <div className={styles.iconWrapper}>
                         <Image src="/statics/icons/nearMe.svg" width="24" height="24"/>
-                        <p className={styles.text}>{address}</p>
+                        <p className={styles.text}>{location.address}</p>
                     </div>
                     <div className={styles.iconWrapper}>
                         <Image src="/statics/icons/places.svg" width="24" height="24"/>
-                        <p className={styles.text}>{neighbourhood}</p>
+                        <p className={styles.text}>{location.dma}</p>
                     </div>
                     <div className={styles.iconWrapper}>
                         <Image src="/statics/icons/star.svg" width="24" height="24"/>
