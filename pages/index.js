@@ -33,7 +33,7 @@ const handleOnBannerBtnClick = () => {
 
 export default function Home(props) {
   
-  console.log('coffeeStores pre render ==>', props)
+  //console.log('coffeeStores pre render ==>', props)
   
   return (
     <div className={styles.container}>
