@@ -8,10 +8,10 @@ import cls from 'classnames'
 import { fetchCoffeeStores } from "../../lib/coffee.stores";
 
 /**
- * Discover-coffee-stores - version 2.06 -  coffee-store-page
+ * Discover-coffee-stores - version 2.07 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Refactoring using the new aliases
+ *    --> Adding the arrow icon to 'Back Home button'
  * 
  * Note: Refer to lib > coffee.stores
  */
@@ -68,6 +68,7 @@ const CoffeStore = (props) => {
             <div className={styles.container}>
                 <div className={styles.col1}>
                     <div className={styles.backToHomeLink}>
+                        <Image className={styles.arrow} src="/statics/icons/arrowBack.svg" width="24" height="24"/>
                         <Link href="/">
                             Back to Home
                         </Link>
