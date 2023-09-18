@@ -3,11 +3,15 @@ import styles from '../styles/Home.module.css';
 import { Banner, Card } from '../components/index.components'
 import Image from 'next/image';
 import { fetchCoffeeStores } from '../lib/coffee.stores';
+import useTrackLocation from '../hooks/use.track.location';
 /**
- * Discover-coffee-stores - version 2.06 -  Home page ( index js )
+ * Discover-coffee-stores - version 2.08 -  Home page ( index js )
  * - Fetaures:
  * 
- *    --> Refactoring using the new aliases
+ *    --> Moving 'handleOnBannerBtnClick' inside the scope 
+ *        of Home Component.
+ * 
+ *    --> Implementing useTrackLocation hook
  * 
  * Note: Refer to lib > coffee.stores
  * 
@@ -24,14 +28,23 @@ export async function getStaticProps(context) {
       }
 }
 
-const handleOnBannerBtnClick = () => {
-  console.log("hi banner button!!")
-}
+
+
 
 export default function Home(props) {
   
   //console.log('coffeeStores pre render ==>', props)
   
+  const { handleTrackLocation, latLong, locationErrorMsg } = useTrackLocation()
+  
+  console.log('latLong obtained ==>', latLong)
+  console.log('locationErrorMsg obtained ==>', locationErrorMsg)
+
+  const handleOnBannerBtnClick = () => {
+    console.log("hi banner button!!");
+    handleTrackLocation()
+  }
+
   return (
     <div className={styles.container}>
       <Head>
