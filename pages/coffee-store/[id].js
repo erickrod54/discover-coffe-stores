@@ -8,21 +8,12 @@ import cls from 'classnames'
 import { fetchCoffeeStores } from "../../lib/coffee.stores";
 
 /**
- * Discover-coffee-stores - version 2.04 -  coffee-store-page
+ * Discover-coffee-stores - version 2.06 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Clearing 'neighbourhood' from the destructure API.
+ *    --> Refactoring using the new aliases
  * 
- *    --> Adding 'Address' and 'dma'
- * 
- * Note: conventions: [id] the name of the js file under 
- * the pages directory creates a dynamic route that can be
- * acceced by the hook 'useRouter', by this component i can
- * see how whatever value that comes after 
- * 
- *      /coffee-sote/'ranmdom value' 
- * 
- * gets reflected as '[id]'
+ * Note: Refer to lib > coffee.stores
  */
 
 export async function getStaticProps(staticProps) {
@@ -33,7 +24,7 @@ export async function getStaticProps(staticProps) {
     return {
       props: {
         coffeeStore: coffeeStores.find((coffeeStore) => {
-          return coffeeStore.fsq_id.toString() === params.id; //dynamic id
+          return coffeeStore.id.toString() === params.id; //dynamic id
         }),
       },
     };
@@ -44,7 +35,7 @@ export async function getStaticProps(staticProps) {
     const paths = coffeeStores.map((coffeeStore) => {
       return {
         params: {
-          id: coffeeStore.fsq_id.toString(),
+          id: coffeeStore.id.toString(),
         },
       };
     });
@@ -66,7 +57,7 @@ const CoffeStore = (props) => {
     if (router.isFallback) {
         return <div>Loading...</div>
     }
-    const { location, name, imgUrl } = props.coffeeStore;
+    const { address, dma,  name, imgUrl } = props.coffeeStore;
     
     console.log(' coffee store props ==>', props)
     return(
@@ -92,11 +83,11 @@ const CoffeStore = (props) => {
                 <div className={cls("glass",styles.col2)}>
                     <div className={styles.iconWrapper}>
                         <Image src="/statics/icons/nearMe.svg" width="24" height="24"/>
-                        <p className={styles.text}>{location.address}</p>
+                        <p className={styles.text}>{address}</p>
                     </div>
                     <div className={styles.iconWrapper}>
                         <Image src="/statics/icons/places.svg" width="24" height="24"/>
-                        <p className={styles.text}>{location.dma}</p>
+                        <p className={styles.text}>{dma}</p>
                     </div>
                     <div className={styles.iconWrapper}>
                         <Image src="/statics/icons/star.svg" width="24" height="24"/>
