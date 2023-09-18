@@ -5,13 +5,10 @@ import Image from 'next/image';
 import { fetchCoffeeStores } from '../lib/coffee.stores';
 import useTrackLocation from '../hooks/use.track.location';
 /**
- * Discover-coffee-stores - version 2.08 -  Home page ( index js )
+ * Discover-coffee-stores - version 2.09 -  Home page ( index js )
  * - Fetaures:
  * 
- *    --> Moving 'handleOnBannerBtnClick' inside the scope 
- *        of Home Component.
- * 
- *    --> Implementing useTrackLocation hook
+ *    --> Implementing 'isFindingLocation'
  * 
  * Note: Refer to lib > coffee.stores
  * 
@@ -35,7 +32,7 @@ export default function Home(props) {
   
   //console.log('coffeeStores pre render ==>', props)
   
-  const { handleTrackLocation, latLong, locationErrorMsg } = useTrackLocation()
+  const { handleTrackLocation, latLong, locationErrorMsg, isFindingLocation } = useTrackLocation()
   
   console.log('latLong obtained ==>', latLong)
   console.log('locationErrorMsg obtained ==>', locationErrorMsg)
@@ -54,7 +51,7 @@ export default function Home(props) {
       </Head>
 
       <main className={styles.main}>
-        <Banner buttonText="View stores nearby" handleOnClick={handleOnBannerBtnClick}/>
+        <Banner buttonText={isFindingLocation ? "Locating..." : "View stores nearby"} handleOnClick={handleOnBannerBtnClick}/>
         <div className={styles.heroImage}>
           <Image src='/statics/hero_image.png' width={650} height={550}/>
         </div>
