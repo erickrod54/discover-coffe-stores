@@ -1,8 +1,8 @@
 /**
- * Discover-coffee-stores - version 2.01 -  coffee.store.module.css
+ * Discover-coffee-stores - version 2.07 -  coffee.store.module.css
  * - Fetaures:
  * 
- *    -->Building the css module for the coffee store page.
+ *    -->Adding arrow styles.
  * 
  * Note: conventions: [id] the name of the js file under 
  * the pages directory creates a dynamic route that can be
@@ -31,11 +31,17 @@
   }
   
   .backToHomeLink {
+    display: flex;
     margin-top: 6rem /* 96px */;
     font-size: 1.125rem /* 18px */;
     line-height: 1.75rem /* 28px */;
     margin-bottom: 0.5rem /* 8px */;
     font-weight: 700;
+
+  }
+
+  .arrow{
+    cursor: pointer;
   }
   
   .nameWrapper {
