@@ -4,15 +4,12 @@ import { Banner, Card } from '../components/index.components'
 import Image from 'next/image';
 import { fetchCoffeeStores } from '../lib/coffee.stores';
 /**
- * Discover-coffee-stores - version 2.03 -  Home page ( index js )
+ * Discover-coffee-stores - version 2.06 -  Home page ( index js )
  * - Fetaures:
  * 
- *    --> Adding 'fsq_id' to the image href
+ *    --> Refactoring using the new aliases
  * 
- * Note: this 'fsq_id' will provide dynamic 'id' comming from the 
- * API to the url:
- * 
- *      '/coffee-store/${coffeeStore.fsq_id}'
+ * Note: Refer to lib > coffee.stores
  * 
 */
 
@@ -57,13 +54,13 @@ export default function Home(props) {
                 return(
                   
                   <Card 
-                    key={coffeeStore.fsq_id}
+                    key={coffeeStore.id}
                     className={styles.card}
-                    name={coffeeStore.fsq_id === `Dunkin'` ? 'duplicate' : coffeeStore.name}
+                    name={coffeeStore.id === `Dunkin'` ? 'duplicate' : coffeeStore.name}
                     imgUrl={coffeeStore.imgUrl ||
                       "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
                     }
-                    href={`/coffee-store/${coffeeStore.fsq_id}`}
+                    href={`/coffee-store/${coffeeStore.id}`}
                   />
                 )
               })}
