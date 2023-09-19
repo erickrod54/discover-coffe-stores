@@ -4,11 +4,13 @@ import { Banner, Card } from '../components/index.components'
 import Image from 'next/image';
 import { fetchCoffeeStores } from '../lib/coffee.stores';
 import useTrackLocation from '../hooks/use.track.location';
+import { useEffect } from 'react';
 /**
- * Discover-coffee-stores - version 2.10 -  Home page ( index js )
+ * Discover-coffee-stores - version 2.11 -  Home page ( index js )
  * - Fetaures:
  * 
- *    --> Implementing error message below the Banner
+ *    --> Implementing useEffect to fetch API data by user 
+ *        location.
  * 
  * Note: Refer to lib > coffee.stores
  * 
@@ -34,12 +36,28 @@ export default function Home(props) {
   
   const { handleTrackLocation, latLong, locationErrorMsg, isFindingLocation } = useTrackLocation()
   
-  console.log('latLong obtained ==>', latLong)
-  console.log('locationErrorMsg obtained ==>', locationErrorMsg)
+ //console.log('latLong obtained ==>', latLong)
+ //console.log('locationErrorMsg obtained ==>', locationErrorMsg)
+
+ useEffect(() => {
+  async function setCoffeeStoresByLocation() {
+    if (latLong) {
+      try {
+        const fetchedCoffeeStores = await fetchCoffeeStores(latLong, 30);
+        console.log({ fetchedCoffeeStores });
+        //set coffee stores
+      } catch (error) {
+        //set error
+        console.log("Error", { error });
+      }
+    }
+  }
+  setCoffeeStoresByLocation();
+}, [latLong]);
 
   const handleOnBannerBtnClick = () => {
     console.log("hi banner button!!");
-    handleTrackLocation()
+    handleTrackLocation();
   }
 
   return (
