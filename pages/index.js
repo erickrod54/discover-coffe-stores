@@ -4,7 +4,7 @@ import { Banner, Card } from '../components/index.components'
 import Image from 'next/image';
 import { fetchCoffeeStores } from '../lib/coffee.stores';
 import useTrackLocation from '../hooks/use.track.location';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 /**
  * Discover-coffee-stores - version 2.11 -  Home page ( index js )
  * - Fetaures:
@@ -35,7 +35,9 @@ export default function Home(props) {
   //console.log('coffeeStores pre render ==>', props)
   
   const { handleTrackLocation, latLong, locationErrorMsg, isFindingLocation } = useTrackLocation()
-  
+
+  const [ coffeeStores, setcoffeeStores ] = useState('')
+   
  //console.log('latLong obtained ==>', latLong)
  //console.log('locationErrorMsg obtained ==>', locationErrorMsg)
 
@@ -45,6 +47,7 @@ export default function Home(props) {
       try {
         const fetchedCoffeeStores = await fetchCoffeeStores(latLong, 30);
         console.log({ fetchedCoffeeStores });
+        setcoffeeStores(fetchedCoffeeStores);
         //set coffee stores
       } catch (error) {
         //set error
