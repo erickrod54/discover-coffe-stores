@@ -5,10 +5,10 @@ import Image from 'next/image';
 import { fetchCoffeeStores } from '../lib/coffee.stores';
 import useTrackLocation from '../hooks/use.track.location';
 /**
- * Discover-coffee-stores - version 2.09 -  Home page ( index js )
+ * Discover-coffee-stores - version 2.10 -  Home page ( index js )
  * - Fetaures:
  * 
- *    --> Implementing 'isFindingLocation'
+ *    --> Implementing error message below the Banner
  * 
  * Note: Refer to lib > coffee.stores
  * 
@@ -52,6 +52,7 @@ export default function Home(props) {
 
       <main className={styles.main}>
         <Banner buttonText={isFindingLocation ? "Locating..." : "View stores nearby"} handleOnClick={handleOnBannerBtnClick}/>
+        { locationErrorMsg && <p> Something went wrong: {locationErrorMsg} </p>}
         <div className={styles.heroImage}>
           <Image src='/statics/hero_image.png' width={650} height={550}/>
         </div>
