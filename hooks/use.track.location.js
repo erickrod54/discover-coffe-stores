@@ -1,26 +1,35 @@
+
+import { useState } from "react"
+import { ACTION_TYPES, useCoffeeStoresContext } from "../context";
+
 /**
- * Discover-coffee-stores - version 2.09 -  use.track.location
+ * Discover-coffee-stores - version 2.12 -  use.track.location
  * - Fetaures:
  * 
- *    --> Implementing 'isFindingLocation' to change from 
- *        Locating to View stores nearby  
+ *    --> Implementing action types to set the latLong of the user  
  * 
- * Note: This hooks pops the window to ask user for the location
+ * Note: This ACTION_TYPES located in the context is created to be 
+ * provided where is needed, and has a useReducer implementation
  * 
 */
 
-import { useState } from "react"
-
 const useTrackLocation = () => {
+    
+    const { dispatch } = useCoffeeStoresContext()
+
     const [ locationErrorMsg, setLocationErrorMsg ] = useState('');
-    const [ latLong, setlatLong ] = useState('');
+    //const [ latLong, setlatLong ] = useState('');
     const [ isFindingLocation, setIsFindingLocation ] = useState(false);
 
     const success = (position) => {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
 
-        setlatLong(`${latitude},${longitude}`);
+        //setlatLong(`${latitude},${longitude}`);
+        dispatch({
+            type: ACTION_TYPES.SET_LANG_LONG,
+            payload: { latLong: `${latitude},${longitude}`}
+        })
         setLocationErrorMsg('')
         setIsFindingLocation(false);
     }
@@ -43,7 +52,7 @@ const useTrackLocation = () => {
     }
 
     return {
-        latLong,
+        //latLong,
         handleTrackLocation,
         locationErrorMsg,
         isFindingLocation
