@@ -8,12 +8,20 @@ import cls from 'classnames'
 import { fetchCoffeeStores } from "../../lib/coffee.stores";
 
 /**
- * Discover-coffee-stores - version 2.07 -  coffee-store-page
+ * Discover-coffee-stores - version 2.12 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Adding the arrow icon to 'Back Home button'
+ *    --> Building 'findCoffeeStoreById' to make a condition
+ *        flow
  * 
- * Note: Refer to lib > coffee.stores
+ * Note: this condition flow is created to get a value of the 
+ * coffee store when the user click on the view stores near me
+ * 
+ * - this functionality is later will be modified to get coffe 
+ * stores by id in the server side-
+ * 
+ * at this version the 'coffee-store' page will display the complete 
+ * info of the pre render coffee stores.
  */
 
 export async function getStaticProps(staticProps) {
@@ -21,11 +29,13 @@ export async function getStaticProps(staticProps) {
     console.log("params", params);
   
     const coffeeStores = await fetchCoffeeStores();
+    const findCoffeeStoreById = coffeeStores.find((coffeeStore) => {
+      return coffeeStore.id.toString() === params.id; //dynamic id
+    })
+
     return {
       props: {
-        coffeeStore: coffeeStores.find((coffeeStore) => {
-          return coffeeStore.id.toString() === params.id; //dynamic id
-        }),
+        coffeeStore: findCoffeeStoreById ? findCoffeeStoreById : {}
       },
     };
   }
