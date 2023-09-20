@@ -5,20 +5,18 @@ import Image from 'next/image';
 import { fetchCoffeeStores } from '../lib/coffee.stores';
 import useTrackLocation from '../hooks/use.track.location';
 import { useEffect, useState } from 'react';
+import { ACTION_TYPES, useCoffeeStoresContext } from '../context';
 /**
- * Discover-coffee-stores - version 2.12 -  Home page ( index js )
+ * Discover-coffee-stores - version 2.13 -  Home page ( index js )
  * - Fetaures:
  * 
- *    --> Building the error state.
+ *    --> Dispatching and setting 'coffeeStores' as payload
  * 
- *    --> Rendering 'coffeeStores' ( comes from the server API by user Location )
- * 
- *    --> Rendering 'props.coffeeStores' ( pre Render coffee stores )
- * 
- * Note: Refer to lib > coffee.stores
+ * Note: By implementing the action by the useReducer it makes 
+ * the state of the view stores to maintain event when i go
+ * to other page and come back
  * 
 */
-
 
 export async function getStaticProps(context) {
 
@@ -36,10 +34,13 @@ export async function getStaticProps(context) {
 export default function Home(props) {
   
   //console.log('coffeeStores pre render ==>', props)
-  
-  const { handleTrackLocation, latLong, locationErrorMsg, isFindingLocation } = useTrackLocation()
+  const { dispatch, state } = useCoffeeStoresContext();
 
-  const [ coffeeStores, setcoffeeStores ] = useState('');
+  const { coffeeStores, latLong } = state;
+  
+  const { handleTrackLocation, locationErrorMsg, isFindingLocation } = useTrackLocation()
+
+  //const [ coffeeStores, setcoffeeStores ] = useState('');
   const [ coffeeStoresError, setCoffeeStoresError ] = useState(null);
    
   console.log({ latLong, locationErrorMsg });
@@ -50,7 +51,13 @@ export default function Home(props) {
       try {
         const fetchedCoffeeStores = await fetchCoffeeStores(latLong, 20);
         console.log({ fetchedCoffeeStores });
-        setcoffeeStores(fetchedCoffeeStores);
+        //setcoffeeStores(fetchedCoffeeStores);
+        dispatch({
+          type: ACTION_TYPES.SET_COFFEE_STORES,
+          payload:{
+            coffeeStores: fetchedCoffeeStores
+          }
+        })
         //set coffee stores
       } catch (error) {
         //set error
