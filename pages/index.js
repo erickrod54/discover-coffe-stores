@@ -6,11 +6,14 @@ import { fetchCoffeeStores } from '../lib/coffee.stores';
 import useTrackLocation from '../hooks/use.track.location';
 import { useEffect, useState } from 'react';
 /**
- * Discover-coffee-stores - version 2.11 -  Home page ( index js )
+ * Discover-coffee-stores - version 2.12 -  Home page ( index js )
  * - Fetaures:
  * 
- *    --> Implementing useEffect to fetch API data by user 
- *        location.
+ *    --> Building the error state.
+ * 
+ *    --> Rendering 'coffeeStores' ( comes from the server API by user Location )
+ * 
+ *    --> Rendering 'props.coffeeStores' ( pre Render coffee stores )
  * 
  * Note: Refer to lib > coffee.stores
  * 
@@ -36,22 +39,22 @@ export default function Home(props) {
   
   const { handleTrackLocation, latLong, locationErrorMsg, isFindingLocation } = useTrackLocation()
 
-  const [ coffeeStores, setcoffeeStores ] = useState('')
+  const [ coffeeStores, setcoffeeStores ] = useState('');
+  const [ coffeeStoresError, setCoffeeStoresError ] = useState(null);
    
- //console.log('latLong obtained ==>', latLong)
- //console.log('locationErrorMsg obtained ==>', locationErrorMsg)
+  console.log({ latLong, locationErrorMsg });
 
  useEffect(() => {
   async function setCoffeeStoresByLocation() {
     if (latLong) {
       try {
-        const fetchedCoffeeStores = await fetchCoffeeStores(latLong, 30);
+        const fetchedCoffeeStores = await fetchCoffeeStores(latLong, 20);
         console.log({ fetchedCoffeeStores });
         setcoffeeStores(fetchedCoffeeStores);
         //set coffee stores
       } catch (error) {
         //set error
-        console.log("Error", { error });
+        setCoffeeStoresError(error)
       }
     }
   }
@@ -74,14 +77,16 @@ export default function Home(props) {
       <main className={styles.main}>
         <Banner buttonText={isFindingLocation ? "Locating..." : "View stores nearby"} handleOnClick={handleOnBannerBtnClick}/>
         { locationErrorMsg && <p> Something went wrong: {locationErrorMsg} </p>}
+        { coffeeStoresError && <p> Something went wrong: {coffeeStoresError}</p>}
         <div className={styles.heroImage}>
           <Image src='/statics/hero_image.png' width={650} height={550}/>
         </div>
-        {props.coffeeStores.length > 0 && (
+
+        {coffeeStores.length > 0 && (
           <div className={styles.titleAndlist}>
-            <h2 className={styles.heading2}>Boynton stores</h2>
+            <h2 className={styles.heading2}>Stores near me</h2>
             <div className={styles.cardLayout}>
-              {props.coffeeStores.filter((diferrentDunkin) => diferrentDunkin.name !== `Dunkin'` && diferrentDunkin.name !== `Starbucks`).map((coffeeStore) => {
+              {coffeeStores.filter((diferrentDunkin) => diferrentDunkin.name !== `Dunkin'` && diferrentDunkin.name !== `Starbucks`).map((coffeeStore) => {
 
                 return(
                   
@@ -99,6 +104,30 @@ export default function Home(props) {
             </div>
           </div>
         )}
+
+      <div className={styles.sectionWrapper}>
+          {props.coffeeStores.length > 0 && (
+            <>
+              <h2 className={styles.heading2}>Boynton coffee stores</h2>
+              <div className={styles.cardLayout}>
+                {props.coffeeStores.map((coffeeStore) => {
+                  return (
+                    <Card
+                      key={coffeeStore.id}
+                      name={coffeeStore.name}
+                      imgUrl={
+                        coffeeStore.imgUrl ||
+                        "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+                      }
+                      href={`/coffee-store/${coffeeStore.id}`}
+                      className={styles.card}
+                    />
+                  );
+                })}
+              </div>
+            </>
+          )}
+        </div>
       </main>
 
     </div>
