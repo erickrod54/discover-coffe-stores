@@ -1,8 +1,9 @@
-/* Dicover-coffee-stores - version 1.16 - global.css - 
+/* Dicover-coffee-stores - version 2.12 - global.css - 
 * Features: 
 *
 *
-*    --> Writting 'titleAndlist' to wrap card and title
+*    --> Writting 'sectionWrapper' to add styles to 
+*       'props.coffeeStores'
 *
 *Note: This first styles are mobile first and then 
 *will be written styles for bigger screens.
@@ -53,6 +54,10 @@
   padding-bottom: 2rem;
   margin-top: 2rem;
   color: var(--text-purple-dark);
+}
+
+.sectionWrapper{
+  margin-top: 12rem;
 }
 /** Breakpoints:
   sm: min-width: 640px;
