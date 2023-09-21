@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import Link from "next/link";
 import Head from "next/head";
@@ -6,22 +6,17 @@ import styles from '../../styles/coffee.store.module.css'
 import Image from "next/image";
 import cls from 'classnames'
 import { fetchCoffeeStores } from "../../lib/coffee.stores";
+import { useCoffeeStoresContext } from "../../context";
+import { isEmpty } from "../../utils";
 
 /**
- * Discover-coffee-stores - version 2.12 -  coffee-store-page
+ * Discover-coffee-stores - version 2.13 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Building 'findCoffeeStoreById' to make a condition
- *        flow
+ *    --> Setting Coffee store data from the API
  * 
- * Note: this condition flow is created to get a value of the 
- * coffee store when the user click on the view stores near me
- * 
- * - this functionality is later will be modified to get coffe 
- * stores by id in the server side-
- * 
- * at this version the 'coffee-store' page will display the complete 
- * info of the pre render coffee stores.
+ * Note: This will include an API call and a util function
+ * for empty verification just in case to handle errors
  */
 
 export async function getStaticProps(staticProps) {
@@ -55,23 +50,46 @@ export async function getStaticProps(staticProps) {
     };
   }
 
-const CoffeStore = (props) => {
+const CoffeStore = (initialProps) => {
 
     const router = useRouter();
    
     const handleUpvoteButton = () => {
-        return console.log('up vote !!')
+      return console.log('up vote !!')
     }
 
     
     if (router.isFallback) {
-        return <div>Loading...</div>
+      return <div>Loading...</div>
     }
-    const { address, dma,  name, imgUrl } = props.coffeeStore;
     
-    console.log(' coffee store props ==>', props)
+    
+    //console.log(' coffee store props ==>', initialProps)
+    
+    const id = router.query.id;
+
+    const [coffeeStore, setCoffeeStore] = useState(initialProps.coffeeStore);
+  
+    const {
+      state: { coffeeStores },
+    } = useCoffeeStoresContext();
+  
+    useEffect(() => {
+      if (isEmpty(initialProps.coffeeStore)) {
+        if (coffeeStores.length > 0) {
+          const findCoffeeStoreById = coffeeStores.find((coffeeStore) => {
+            return coffeeStore.id.toString() === id; //dynamic id
+          });
+          setCoffeeStore(findCoffeeStoreById);
+        }
+      }
+    }, [id]);
+  
+    const { name, address, dma, imgUrl } = coffeeStore;
+    
+
     return(
-        <div className={styles.layout}>
+      <div className={styles.layout}>
             <Head>
                 <title>{name}</title>
             </Head>
