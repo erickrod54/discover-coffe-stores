@@ -7,10 +7,12 @@ import useTrackLocation from '../hooks/use.track.location';
 import { useEffect, useState } from 'react';
 import { ACTION_TYPES, useCoffeeStoresContext } from '../context';
 /**
- * Discover-coffee-stores - version 2.13 -  Home page ( index js )
+ * Discover-coffee-stores - version 2.14 -  Home page ( index js )
  * - Fetaures:
  * 
- *    --> Dispatching and setting 'coffeeStores' as payload
+ *    --> Invoking serveless function by fetching
+ * 
+ *    --> Interpolating the API
  * 
  * Note: By implementing the action by the useReducer it makes 
  * the state of the view stores to maintain event when i go
@@ -49,13 +51,15 @@ export default function Home(props) {
   async function setCoffeeStoresByLocation() {
     if (latLong) {
       try {
-        const fetchedCoffeeStores = await fetchCoffeeStores(latLong, 20);
-        console.log({ fetchedCoffeeStores });
+        const response = await fetch(`/api/getCoffeStoresByLocation?latLong=${latLong}&limit=30`);
+
+        const coffeeStores = await response.json()
+        console.log('fething coffee stores ==> ',{ response });
         //setcoffeeStores(fetchedCoffeeStores);
         dispatch({
           type: ACTION_TYPES.SET_COFFEE_STORES,
           payload:{
-            coffeeStores: fetchedCoffeeStores
+            coffeeStores
           }
         })
         //set coffee stores
