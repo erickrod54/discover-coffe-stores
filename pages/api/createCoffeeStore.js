@@ -1,12 +1,11 @@
 /**
- * Discover-coffee-stores - version 2.18 -  coffee-store-page
+ * Discover-coffee-stores - version 2.19 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Clearing first flow containing messages POST - 'Hi there', 
- *        GET - 'method GET'
+ *    --> Handeling errors
  * 
- * Note: now 'field' is be shaped by mapping 'findingCoffeeStoreRecords'
- * and setting it as 'res.json'
+ * Note: To handle errors i have to wrap the shaped object in a
+ * 'try-catch' flow so i can catch-handle the error.
  */
 
 var Airtable = require('airtable');
@@ -26,18 +25,23 @@ const createCoffeeStore = async (req, res) => {
 
     console.log({ findingCoffeeStoreRecords })
 
-    if (findingCoffeeStoreRecords.length !== 0) {
-        const records = findingCoffeeStoreRecords.map((records) => {
-            return{
-                ...records.fields
-            }
-        })
-        res.json(records)
-    }else{
-    //create a record
-        res.json({ message: "create a record"})    
-    }
-    
+    try {
+        if (findingCoffeeStoreRecords.length !== 0) {
+            const records = findingCoffeeStoreRecords.map((records) => {
+                return{
+                    ...records.fields
+                }
+            })
+            res.json(records)
+        }else{
+        //create a record
+            res.json({ message: "create a record"})    
+        }
+    } catch (err){
+        console.log('Error finding store', err );
+        res.status(500);
+        res.json({ message: 'Error finding store', err});
+    } 
 };
 
 export default createCoffeeStore;
