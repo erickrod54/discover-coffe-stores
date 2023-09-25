@@ -1,8 +1,9 @@
 /**
- * Discover-coffee-stores - version 2.17 -  coffee-store-page
+ * Discover-coffee-stores - version 2.18 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Shaping 'findingCoffeeStoreRecords' to show only 'fields'
+ *    --> Clearing first flow containing messages POST - 'Hi there', 
+ *        GET - 'method GET'
  * 
  * Note: now 'field' is be shaped by mapping 'findingCoffeeStoreRecords'
  * and setting it as 'res.json'
@@ -37,11 +38,6 @@ const createCoffeeStore = async (req, res) => {
         res.json({ message: "create a record"})    
     }
     
-    if (req.method === 'POST') {
-        res.json({ message: "Hi there"});
-    } else {
-        res.json({ message: 'method is GET'});
-    }
 };
 
 export default createCoffeeStore;
