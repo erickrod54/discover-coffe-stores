@@ -1,26 +1,15 @@
 /**
- * Discover-coffee-stores - version 2.16 -  coffee-store-page
+ * Discover-coffee-stores - version 2.17 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Testing 'POST' flow
+ *    --> Shaping 'findingCoffeeStoreRecords' to show only 'fields'
  * 
- * Note: the flow is being created with the 'if-else'
- * condition, the result can be visualized using 
- * 'postman' client - API tester -
- * 
- * by introducing 'http://localhost:3000/api/createCoffeeStore'
- * 
- * i will get a message to 'create' a coffeeStore and if it exists 
- * with the id of '0', i get an object from airtable, that will 
- * contain in 'fields' the information i am interested in.
- * 
- * this 'field' will be shaped in the next version by mapping them
+ * Note: now 'field' is be shaped by mapping 'findingCoffeeStoreRecords'
+ * and setting it as 'res.json'
  */
 
 var Airtable = require('airtable');
 var base = new Airtable({apiKey: process.env.AIRTABLE_API_KEY }).base(process.env.AIRTABLE_BASE_KEY );
-
-//var base = new Airtable({apiKey: 'patBuS90L8qsGpOe9.d8c6b5eb75a466e9b2bf673aa8bccb155a5181b511f3475160fad27d7c88057d'}).base(process.env.AIRTABLE_BASE_KEY);
 
 const table = base('coffee-stores');
 
@@ -37,7 +26,12 @@ const createCoffeeStore = async (req, res) => {
     console.log({ findingCoffeeStoreRecords })
 
     if (findingCoffeeStoreRecords.length !== 0) {
-        res.json(findingCoffeeStoreRecords)
+        const records = findingCoffeeStoreRecords.map((records) => {
+            return{
+                ...records.fields
+            }
+        })
+        res.json(records)
     }else{
     //create a record
         res.json({ message: "create a record"})    
