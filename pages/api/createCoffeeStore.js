@@ -1,11 +1,13 @@
 /**
- * Discover-coffee-stores - version 2.21 -  coffee-store-page
+ * Discover-coffee-stores - version 2.22 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Shaping 'createRecords' to 'fields'
+ *    --> Clearing 'createRecords' message
+ * 
+ *    --> Changing id to check id creation.
  * 
  * Note: create record code block is being modifying to create the
- * coffee store record - harcoded id is set as 2 temproraly so 
+ * coffee store record - harcoded id is set as 3 temproraly so 
  * i can get the message "create a record"
  */
 
@@ -21,7 +23,7 @@ const createCoffeeStore = async (req, res) => {
     //find a record
 
     const findingCoffeeStoreRecords = await table.select({
-        filterByFormula:`id="2"`
+        filterByFormula:`id="3"`
     }).firstPage();
 
     console.log({ findingCoffeeStoreRecords })
@@ -39,12 +41,12 @@ const createCoffeeStore = async (req, res) => {
             const createRecords = await table.create([
                 {
                     fields: {
-                        id: "1",
-                        name: "Favorite Coffee Store Erick",
-                        address: "patua vida",
+                        id: "3",
+                        name: "Favorite Coffee Store Erick with discount",
+                        address: "patua vida mia",
                         dma: "patua blv",
                         vote: 200,
-                        imgUrl: "http://myimg.com",
+                        imgUrl: "http://myimgg.com",
                     }
                 }
             ]) 
@@ -53,7 +55,7 @@ const createCoffeeStore = async (req, res) => {
                     ...records.fields
                 }
             })
-            res.json({ message: "create a record", records})
+            res.json({records})
         }
     } catch (err){
         console.log('Error finding store', err );
