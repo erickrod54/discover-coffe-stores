@@ -1,15 +1,12 @@
 /**
- * Discover-coffee-stores - version 2.24 -  coffee-store-page
+ * Discover-coffee-stores - version 3.00 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Wrapping everything with the 'POST' flow.
+ *    --> Validating 'id' and 'name' to 'createCoffee' Store
  * 
- *    --> Making createRecords dynamic.
- * 
- * Note: createRecors is made dynamic by destructuring field 
- * directly from the 'req.body' from the 'airtables'
- * 
- * 
+ * Note: this will prevent to create a new coffee store without
+ * 'name' and 'id' that is essential in order to identify them
+ * as a coffee store
  */
 
 var Airtable = require('airtable');
@@ -43,26 +40,31 @@ const createCoffeeStore = async (req, res) => {
                 })
                 res.json(records)
             }else{
-            //create a record
-                const createRecords = await table.create([
-                    {
-                        fields: {
-                            id,
-                            name,
-                            address,
-                            dma,
-                            vote,
-                            imgUrl
-                        }
+                if (name && id) {
+                    //create a record
+                        const createRecords = await table.create([
+                            {
+                                fields: {
+                                    id,
+                                    name,
+                                    address,
+                                    dma,
+                                    vote,
+                                    imgUrl
+                                }
+                            }
+                        ]) 
+                        const records = createRecords.map((records) => {
+                            return{
+                                ...records.fields
+                            }
+                        })
+                        res.json({records})
+                    }else{
+                        res.status(400)
+                        res.json({ message: 'Id or name is missing'})
                     }
-                ]) 
-                const records = createRecords.map((records) => {
-                    return{
-                        ...records.fields
-                    }
-                })
-                res.json({records})
-            }
+                }
         } catch (err){
             console.log('Error finding store', err );
             res.status(500);
