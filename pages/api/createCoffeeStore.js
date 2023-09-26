@@ -1,14 +1,12 @@
 /**
- * Discover-coffee-stores - version 2.20 -  coffee-store-page
+ * Discover-coffee-stores - version 2.21 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Shaping 'createRecords'
+ *    --> Shaping 'createRecords' to 'fields'
  * 
  * Note: create record code block is being modifying to create the
- * coffee store record - harcoded id is set as 1 temproraly so 
- * i can find the crated one-
- * 
- * in next versions this object also shapped for 'fields'
+ * coffee store record - harcoded id is set as 2 temproraly so 
+ * i can get the message "create a record"
  */
 
 var Airtable = require('airtable');
@@ -23,7 +21,7 @@ const createCoffeeStore = async (req, res) => {
     //find a record
 
     const findingCoffeeStoreRecords = await table.select({
-        filterByFormula:`id="1"`
+        filterByFormula:`id="2"`
     }).firstPage();
 
     console.log({ findingCoffeeStoreRecords })
@@ -50,7 +48,12 @@ const createCoffeeStore = async (req, res) => {
                     }
                 }
             ]) 
-            res.json({ message: "create a record", records: createRecords})
+            const records = createRecords.map((records) => {
+                return{
+                    ...records.fields
+                }
+            })
+            res.json({ message: "create a record", records})
         }
     } catch (err){
         console.log('Error finding store', err );
