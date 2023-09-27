@@ -1,9 +1,8 @@
 /**
- * Discover-coffee-stores - version 3.01 -  coffee-store-page
+ * Discover-coffee-stores - version 3.02 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Building a flow that validate 'id' to wrap 'find'
- *        and 'create' a coffee store
+ *    --> Editing the 'catch' error 'message'.
  * 
  * Note: this will prevent to create a new coffee store without
  * 'name' and 'id' that is essential in order to identify them
@@ -69,9 +68,9 @@ const createCoffeeStore = async (req, res) => {
                         }
                     }
             } catch (err){
-                console.log('Error finding store', err );
+                console.log('Error creating or finding store', err );
                 res.status(500);
-                res.json({ message: 'Error finding store', err});
+                res.json({ message: 'Error creating or finding store', err});
             } 
         };
         }
