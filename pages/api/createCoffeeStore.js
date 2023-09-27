@@ -1,18 +1,16 @@
 /**
- * Discover-coffee-stores - version 3.02 -  coffee-store-page
+ * Discover-coffee-stores - version 3.03 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Editing the 'catch' error 'message'.
+ *    --> Implementing 'getMinifiedRecords' to 'find' and 'create'
+ *        a 'coffee' store.
  * 
  * Note: this will prevent to create a new coffee store without
  * 'name' and 'id' that is essential in order to identify them
  * as a coffee store
  */
 
-var Airtable = require('airtable');
-var base = new Airtable({apiKey: process.env.AIRTABLE_API_KEY }).base(process.env.AIRTABLE_BASE_KEY );
-
-const table = base('coffee-stores');
+import { getMinifiedRecords, table } from "../../lib/airtable";
 
 console.log({ table })
 
@@ -35,11 +33,7 @@ const createCoffeeStore = async (req, res) => {
         
             try {
                 if (findingCoffeeStoreRecords.length !== 0) {
-                    const records = findingCoffeeStoreRecords.map((records) => {
-                        return{
-                            ...records.fields
-                        }
-                    })
+                    const records = getMinifiedRecords(findingCoffeeStoreRecords)
                     res.json(records)
                 }else{
                     if (name) {
@@ -56,11 +50,7 @@ const createCoffeeStore = async (req, res) => {
                                     }
                                 }
                             ]) 
-                            const records = createRecords.map((records) => {
-                                return{
-                                    ...records.fields
-                                }
-                            })
+                            const records = getMinifiedRecords(createRecords)
                             res.json({records})
                         }else{
                             res.status(400)
