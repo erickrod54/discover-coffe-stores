@@ -1,13 +1,11 @@
 /**
- * Discover-coffee-stores - version 3.03 -  coffee-store-page
+ * Discover-coffee-stores - version 3.04 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Implementing 'getMinifiedRecords' to 'find' and 'create'
- *        a 'coffee' store.
+ *    --> Fixing 'id' flow
  * 
- * Note: this will prevent to create a new coffee store without
- * 'name' and 'id' that is essential in order to identify them
- * as a coffee store
+ * Note: This fix will verify the id before creating or finding
+ * a coffee store
  */
 
 import { getMinifiedRecords, table } from "../../lib/airtable";
@@ -22,16 +20,18 @@ const createCoffeeStore = async (req, res) => {
         //find a record
     
         const { id, name, address, dma, vote, imgUrl } = req.body;
-
-        if (id) {
             
-            const findingCoffeeStoreRecords = await table.select({
-                filterByFormula: `id=${id}`
-            }).firstPage();
         
-            console.log({ findingCoffeeStoreRecords })
-        
-            try {
+        try {
+
+            if (id) {
+                
+                const findingCoffeeStoreRecords = await table.select({
+                    filterByFormula: `id=${id}`
+                }).firstPage();
+            
+                console.log({ findingCoffeeStoreRecords })
+
                 if (findingCoffeeStoreRecords.length !== 0) {
                     const records = getMinifiedRecords(findingCoffeeStoreRecords)
                     res.json(records)
@@ -57,13 +57,16 @@ const createCoffeeStore = async (req, res) => {
                             res.json({ message: 'Id or name is missing'})
                         }
                     }
+            }else{
+                res.status(400);
+                res.json({ message: "Id is missing" });
+            }
             } catch (err){
                 console.log('Error creating or finding store', err );
                 res.status(500);
                 res.json({ message: 'Error creating or finding store', err});
             } 
         };
-        }
         }
     
 
