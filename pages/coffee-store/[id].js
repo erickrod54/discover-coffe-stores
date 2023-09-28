@@ -10,10 +10,11 @@ import { useCoffeeStoresContext } from "../../context";
 import { isEmpty } from "../../utils";
 
 /**
- * Discover-coffee-stores - version 2.13 -  coffee-store-page
+ * Discover-coffee-stores - version 3.05 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Setting Coffee store data from the API
+ *    --> Converting the coffe store by 'id' in a JSON
+ *        object so can be sent to 'createCoffeeStore'
  * 
  * Note: This will include an API call and a util function
  * for empty verification just in case to handle errors
@@ -73,14 +74,44 @@ const CoffeStore = (initialProps) => {
     const {
       state: { coffeeStores },
     } = useCoffeeStoresContext();
+   
+    const handleCreateCoffeeStore = async (coffeeStore) => {
+      try {
+        const { id, name, address, dma, vote, imgUrl } = coffeeStore;
+        const response = await fetch("/api/createCoffeeStore", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id,
+            name,
+            address: address || "", 
+            dma: dma || "", 
+            vote: 0, 
+            imgUrl
+          }),
+        });
+  
+        const dbCoffeeStore = await response.json();
+        console.log({ dbCoffeeStore });
+      } catch (err) {
+        console.error("Error creating coffee store", err);
+      }
+    };
+  
   
     useEffect(() => {
       if (isEmpty(initialProps.coffeeStore)) {
         if (coffeeStores.length > 0) {
-          const findCoffeeStoreById = coffeeStores.find((coffeeStore) => {
+          const coffeeStoreFromContext = coffeeStores.find((coffeeStore) => {
             return coffeeStore.id.toString() === id; //dynamic id
           });
-          setCoffeeStore(findCoffeeStoreById);
+
+          if (coffeeStoreFromContext) {
+            setCoffeeStore(coffeeStoreFromContext);
+            handleCreateCoffeeStore(coffeeStoreFromContext);
+          }
         }
       }
     }, [id]);
