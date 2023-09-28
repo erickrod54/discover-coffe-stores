@@ -1,8 +1,9 @@
 /**
- * Discover-coffee-stores - version 3.04 -  coffee-store-page
+ * Discover-coffee-stores - version 3.05 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Fixing 'id' flow
+ *    --> Adding double quote to "${id}" so can be taken in
+ *         the JSON object in single store. 
  * 
  * Note: This fix will verify the id before creating or finding
  * a coffee store
@@ -27,7 +28,7 @@ const createCoffeeStore = async (req, res) => {
             if (id) {
                 
                 const findingCoffeeStoreRecords = await table.select({
-                    filterByFormula: `id=${id}`
+                    filterByFormula: `id="${id}"`
                 }).firstPage();
             
                 console.log({ findingCoffeeStoreRecords })
