@@ -10,10 +10,10 @@ import { useCoffeeStoresContext } from "../../context";
 import { isEmpty } from "../../utils";
 
 /**
- * Discover-coffee-stores - version 3.09 -  coffee-store-page
+ * Discover-coffee-stores - version 3.10 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Building 'voting' state 
+ *    --> Building 'voting' handler 
  * 
  * Note: This is made in order to store the data, and make 
  * the 'vote' persistent so i can get the value each time 
@@ -54,11 +54,8 @@ export async function getStaticProps(staticProps) {
 const CoffeStore = (initialProps) => {
 
     const router = useRouter();
-   
-    const handleUpvoteButton = () => {
-      return console.log('up vote !!')
-    }
-
+  
+    
     
     if (router.isFallback) {
       return <div>Loading...</div>
@@ -68,13 +65,13 @@ const CoffeStore = (initialProps) => {
     //console.log(' coffee store props ==>', initialProps)
     
     const id = router.query.id;
-
-    const [coffeeStore, setCoffeeStore] = useState(initialProps.coffeeStore);
+    
+  const [coffeeStore, setCoffeeStore] = useState(initialProps.coffeeStore);
   
-    const {
-      state: { coffeeStores },
-    } = useCoffeeStoresContext();
-   
+  const {
+    state: { coffeeStores },
+  } = useCoffeeStoresContext();
+  
     const handleCreateCoffeeStore = async (coffeeStore) => {
       try {
         const { id, name, address, dma, vote, imgUrl } = coffeeStore;
@@ -92,22 +89,22 @@ const CoffeStore = (initialProps) => {
             imgUrl
           }),
         });
-  
+        
         const dbCoffeeStore = await response.json();
         console.log({ dbCoffeeStore });
       } catch (err) {
         console.error("Error creating coffee store", err);
       }
     };
-  
-  
+    
+    
     useEffect(() => {
       if (isEmpty(initialProps.coffeeStore)) {
         if (coffeeStores.length > 0) {
           const coffeeStoreFromContext = coffeeStores.find((coffeeStore) => {
             return coffeeStore.id.toString() === id; //dynamic id
           });
-
+          
           if (coffeeStoreFromContext) {
             setCoffeeStore(coffeeStoreFromContext);
             handleCreateCoffeeStore(coffeeStoreFromContext);
@@ -119,12 +116,18 @@ const CoffeStore = (initialProps) => {
         handleCreateCoffeeStore(initialProps.coffeeStore)
       }
     }, [id, initialProps, initialProps.CoffeStore]);
-  
+    
     const { name, address, dma, imgUrl } = coffeeStore;
-
+    
     const [ voting, setVotingCount ] = useState(1);
     
-
+    const handleUpvoteButton = () => {
+      console.log('up vote !!')
+      let count = voting + 1;
+      setVotingCount(count)
+  }
+    
+    
     return(
       <div className={styles.layout}>
             <Head>
@@ -157,7 +160,7 @@ const CoffeStore = (initialProps) => {
                     </div>
                     <div className={styles.iconWrapper}>
                         <Image src="/statics/icons/star.svg" width="24" height="24"/>
-                        <p className={styles.text}>1</p>
+                        <p className={styles.text}>{voting}</p>
                     </div>
 
                     <button className={styles.upvoteButton} onClick={handleUpvoteButton}>Up vote!!</button>
