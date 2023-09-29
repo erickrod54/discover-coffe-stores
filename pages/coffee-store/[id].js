@@ -10,14 +10,14 @@ import { useCoffeeStoresContext } from "../../context";
 import { isEmpty } from "../../utils";
 
 /**
- * Discover-coffee-stores - version 3.05 -  coffee-store-page
+ * Discover-coffee-stores - version 3.08 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Converting the coffe store by 'id' in a JSON
- *        object so can be sent to 'createCoffeeStore'
+ *    --> Making SSG 'CoffeeStore' avaible also in the airtable 
  * 
- * Note: This will include an API call and a util function
- * for empty verification just in case to handle errors
+ * Note: This is made in order to store the data, and make 
+ * the 'vote' persistent so i can get the value each time 
+ * it gets updated
  */
 
 export async function getStaticProps(staticProps) {
@@ -113,8 +113,12 @@ const CoffeStore = (initialProps) => {
             handleCreateCoffeeStore(coffeeStoreFromContext);
           }
         }
+      } else {
+        // SSG
+        
+        handleCreateCoffeeStore(initialProps.coffeeStore)
       }
-    }, [id]);
+    }, [id, initialProps, initialProps.CoffeStore]);
   
     const { name, address, dma, imgUrl } = coffeeStore;
     
