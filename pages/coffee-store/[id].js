@@ -10,10 +10,10 @@ import { useCoffeeStoresContext } from "../../context";
 import { isEmpty } from "../../utils";
 
 /**
- * Discover-coffee-stores - version 3.08 -  coffee-store-page
+ * Discover-coffee-stores - version 3.09 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Making SSG 'CoffeeStore' avaible also in the airtable 
+ *    --> Building 'voting' state 
  * 
  * Note: This is made in order to store the data, and make 
  * the 'vote' persistent so i can get the value each time 
@@ -121,6 +121,8 @@ const CoffeStore = (initialProps) => {
     }, [id, initialProps, initialProps.CoffeStore]);
   
     const { name, address, dma, imgUrl } = coffeeStore;
+
+    const [ voting, setVotingCount ] = useState(1);
     
 
     return(
