@@ -3,6 +3,6 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/coffee-store/[id]": "pages/coffee-store/[id].js",
-  "/api/createCoffeeStore": "pages/api/createCoffeeStore.js"
+  "/api/createCoffeeStore": "pages/api/createCoffeeStore.js",
+  "/coffee-store/[id]": "pages/coffee-store/[id].js"
 }
