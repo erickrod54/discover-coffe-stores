@@ -1,19 +1,39 @@
+import { getMinifiedRecords, table } from "../../lib/airtable";
+
 /**
- * Discover-coffee-stores - version 3.12 -  getCoffeeStoreById
+ * Discover-coffee-stores - version 3.13 -  getCoffeeStoreById
  * - Fetaures:
  * 
- *    --> Testing API without the 'id'
+ *    --> Implementing 'findingCoffeeStoreRecords' code 
+ *        previously made in 'createCoffeeStore'
  * 
- * Note: the test is for 'res.status(400)' that 
- * is part od the 'id' flow
+ *    --> Testing API retrieving the whole record by 'id'
+ * 
+ *    --> As 'findingCoffeeStoreRecords' is 'await' the serveless 
+ *        function becomes in 'async'
+ * 
+ * Note: An 'Id' from the airtable is taken to test it in postman
  */
 
-const getCoffeeStoreById = (req, res) => {
+const getCoffeeStoreById = async (req, res) => {
     const { id } = req.query;
 
     try {
         if (id) {
-            res.json({ message: `id is created ${id}`})
+
+            const findingCoffeeStoreRecords = await table.select({
+                filterByFormula: `id="${id}"`
+            }).firstPage();
+        
+            console.log({ findingCoffeeStoreRecords })
+
+            if (findingCoffeeStoreRecords.length !== 0) {
+                const records = getMinifiedRecords(findingCoffeeStoreRecords)
+                res.json(records)
+            }else{
+                res.json({ message: `id could not be found`})
+            }
+
         }else{
             res.status(400);
             res.json({ message: "Id is missing"})
