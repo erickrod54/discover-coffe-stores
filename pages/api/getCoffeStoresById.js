@@ -1,14 +1,14 @@
-import { findRecordByFilter, getMinifiedRecords, table } from "../../lib/airtable";
+import { findRecordByFilter } from "../../lib/airtable";
 
 
 /**
- * Discover-coffee-stores - version 3.14 -  getCoffeeStoreById
+ * Discover-coffee-stores - version 3.15 -  getCoffeeStoreById
  * - Fetaures:
  * 
- *    --> Refactoring 'findingCoffeStore' by 'findRecordByFilter'
+ *    --> Clearing 'getMinifiedRecords', 'table ' imports
  * 
- * Note: This refactor focus on get the 'findingCoffeStore' 
- * reusable by adding it to the features library.
+ * Note: These imports will be use directly by 'findRecordByFilter'
+ * at lib directory
  */
 
 const getCoffeeStoreById = async (req, res) => {
