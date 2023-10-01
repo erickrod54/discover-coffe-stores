@@ -1,18 +1,14 @@
-import { getMinifiedRecords, table } from "../../lib/airtable";
+import { findRecordByFilter, getMinifiedRecords, table } from "../../lib/airtable";
+
 
 /**
- * Discover-coffee-stores - version 3.13 -  getCoffeeStoreById
+ * Discover-coffee-stores - version 3.14 -  getCoffeeStoreById
  * - Fetaures:
  * 
- *    --> Implementing 'findingCoffeeStoreRecords' code 
- *        previously made in 'createCoffeeStore'
+ *    --> Refactoring 'findingCoffeStore' by 'findRecordByFilter'
  * 
- *    --> Testing API retrieving the whole record by 'id'
- * 
- *    --> As 'findingCoffeeStoreRecords' is 'await' the serveless 
- *        function becomes in 'async'
- * 
- * Note: An 'Id' from the airtable is taken to test it in postman
+ * Note: This refactor focus on get the 'findingCoffeStore' 
+ * reusable by adding it to the features library.
  */
 
 const getCoffeeStoreById = async (req, res) => {
@@ -21,16 +17,12 @@ const getCoffeeStoreById = async (req, res) => {
     try {
         if (id) {
 
-            const findingCoffeeStoreRecords = await table.select({
-                filterByFormula: `id="${id}"`
-            }).firstPage();
-        
-            console.log({ findingCoffeeStoreRecords })
+            const records = await findRecordByFilter(id)
 
-            if (findingCoffeeStoreRecords.length !== 0) {
-                const records = getMinifiedRecords(findingCoffeeStoreRecords)
+            if (records.length !== 0 ) {
                 res.json(records)
-            }else{
+            }
+            else{
                 res.json({ message: `id could not be found`})
             }
 
