@@ -1,15 +1,13 @@
+import { findRecordByFilter, getMinifiedRecords, table } from "../../lib/airtable";
 /**
- * Discover-coffee-stores - version 3.05 -  coffee-store-page
+ * Discover-coffee-stores - version 3.14 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Adding double quote to "${id}" so can be taken in
- *         the JSON object in single store. 
+ *    --> Implementing 'findRecordByFilter' to create a coffee store
  * 
  * Note: This fix will verify the id before creating or finding
  * a coffee store
  */
-
-import { getMinifiedRecords, table } from "../../lib/airtable";
 
 console.log({ table })
 
@@ -27,14 +25,9 @@ const createCoffeeStore = async (req, res) => {
 
             if (id) {
                 
-                const findingCoffeeStoreRecords = await table.select({
-                    filterByFormula: `id="${id}"`
-                }).firstPage();
-            
-                console.log({ findingCoffeeStoreRecords })
-
-                if (findingCoffeeStoreRecords.length !== 0) {
-                    const records = getMinifiedRecords(findingCoffeeStoreRecords)
+                const records = await findRecordByFilter(id)
+                
+                if (records.length !== 0) {
                     res.json(records)
                 }else{
                     if (name) {
