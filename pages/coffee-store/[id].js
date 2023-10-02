@@ -126,12 +126,25 @@ const CoffeStore = (initialProps) => {
     const [ voting, setVotingCount ] = useState(1);
 
     const { data, error } = useSWR(`/api/getCoffeeStoreById?id=${id}`, fetcher);
+
+    useEffect(() => {
+      if (data && data.length > 0) {
+        console.log('data from the SWR ==>', data)
+        setCoffeeStore(data[0]);
+        setVotingCount(data[0].voting);
+      }
+    }, [data]);
     
     const handleUpvoteButton = () => {
       console.log('up vote !!')
       let count = voting + 1;
       setVotingCount(count)
   }
+
+  if (error) {
+    return <div>Something went wrong retrieving coffee store page</div>;
+  }
+
     
     
     return(

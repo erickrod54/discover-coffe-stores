@@ -29,11 +29,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
-    ],
-    "/coffee-store/[id]": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/coffee-store/[id].js"
     ]
   },
   "ampFirstPages": []
