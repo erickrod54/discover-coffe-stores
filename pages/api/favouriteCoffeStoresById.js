@@ -1,11 +1,10 @@
 /**
- * Discover-coffee-stores - version 3.16 -  favouriteCoffeStoresById
+ * Discover-coffee-stores - version 3.17 -  favouriteCoffeStoresById
  * - Fetaures:
  * 
- *    --> Building 'favouriteCoffeStoresById' serveless function
+ *    --> Destructuring 'id' from the body
  * 
- *    --> Building the flow to only response when the method is
- *        "PUT"
+ *    --> Put ( updating ) to get the 'id'
  * 
  * Note: This fix will verify the id before creating or finding
  * a coffee store
@@ -14,7 +13,8 @@
 const favouriteCoffeStoresById = (req, res) => {
 
     if (req.method === "PUT") {
-        res.json({ message: "this works"})
+        const { id } = req.body;
+        res.json({ message: "this works", id})
     }
 }
 
