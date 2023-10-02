@@ -8,12 +8,16 @@ import cls from 'classnames'
 import { fetchCoffeeStores } from "../../lib/coffee.stores";
 import { useCoffeeStoresContext } from "../../context";
 import { isEmpty } from "../../utils";
+import useSWR from "swr";
 
 /**
- * Discover-coffee-stores - version 3.10 -  coffee-store-page
+ * Discover-coffee-stores - version 3.15 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Building 'voting' handler 
+ *    --> Importing useSWR hook.
+ * 
+ *    --> Implementing useSWR to optimize 'get' coffee store
+ *        API
  * 
  * Note: This is made in order to store the data, and make 
  * the 'vote' persistent so i can get the value each time 
@@ -120,6 +124,8 @@ const CoffeStore = (initialProps) => {
     const { name, address, dma, imgUrl } = coffeeStore;
     
     const [ voting, setVotingCount ] = useState(1);
+
+    const { data, error } = useSWR(`/api/getCoffeeStoreById?id=${id}`, fetcher);
     
     const handleUpvoteButton = () => {
       console.log('up vote !!')
