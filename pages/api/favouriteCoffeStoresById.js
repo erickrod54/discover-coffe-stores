@@ -1,10 +1,9 @@
 /**
- * Discover-coffee-stores - version 3.17 -  favouriteCoffeStoresById
+ * Discover-coffee-stores - version 3.18 -  favouriteCoffeStoresById
  * - Fetaures:
  * 
- *    --> Destructuring 'id' from the body
- * 
- *    --> Put ( updating ) to get the 'id'
+ *    --> Defining a 'status code' 500 for an error upvoting
+ *        a coffee store
  * 
  * Note: This fix will verify the id before creating or finding
  * a coffee store
@@ -13,8 +12,14 @@
 const favouriteCoffeStoresById = (req, res) => {
 
     if (req.method === "PUT") {
-        const { id } = req.body;
-        res.json({ message: "this works", id})
+
+        try {
+            const { id } = req.body;
+            res.json({ message: "this works", id})
+        } catch (error) {
+            res.status(500);
+            res.json({ message: "Error upvoting coffee store", error})
+        }
     }
 }
 
