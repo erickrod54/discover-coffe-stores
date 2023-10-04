@@ -1,9 +1,13 @@
-import { findRecordByFilter } from "../../lib/airtable";
+import { findRecordByFilter, table } from "../../lib/airtable";
+
 /**
- * Discover-coffee-stores - version 4.00 -  favouriteCoffeStoresById
+ * Discover-coffee-stores - version 4.01 -  favouriteCoffeStoresById
  * - Fetaures:
  * 
- *    --> Calculating voting once the API gets updated ( PUT method )   
+ *    --> Retreiving the whole record with airtable record ID
+ *       ( PUT method )   
+ * 
+ *    --> Incrementing the 'vote' each time API get send ( PUT method ) . 
  * 
  * Note: This is been tested on 'postman' by hitting send with the API:
  * 
@@ -29,8 +33,22 @@ const favouriteCoffeStoresById = async (req, res) => {
                     const calculateVoting = parseInt(record.vote) + 1;
 
                     console.log({ calculateVoting })
+
+                    //update a Record
+
+                    const updateRecord = await table.update([
+                        {
+                            id: record.recordId,
+                            fields: {
+                                vote: calculateVoting
+                            }
+                        }
+                    ])
+
+                    if (updateRecord) {
+                        res.json(updateRecord)
+                    }
                     
-                    res.json(records)
                 }else{
                     res.json({ message: "Coffee Store Id doesn't exist", id})
                 }
