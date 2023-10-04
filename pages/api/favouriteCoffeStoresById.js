@@ -1,13 +1,11 @@
-import { findRecordByFilter, table } from "../../lib/airtable";
+import { findRecordByFilter, getMinifiedRecords, table } from "../../lib/airtable";
 
 /**
- * Discover-coffee-stores - version 4.01 -  favouriteCoffeStoresById
+ * Discover-coffee-stores - version 4.02 -  favouriteCoffeStoresById
  * - Fetaures:
  * 
- *    --> Retreiving the whole record with airtable record ID
- *       ( PUT method )   
- * 
- *    --> Incrementing the 'vote' each time API get send ( PUT method ) . 
+ *    --> Minifying records to get the airtable 'recordId' with the 
+ *        fields. 
  * 
  * Note: This is been tested on 'postman' by hitting send with the API:
  * 
@@ -46,7 +44,8 @@ const favouriteCoffeStoresById = async (req, res) => {
                     ])
 
                     if (updateRecord) {
-                        res.json(updateRecord)
+                        const minifiedRecords = getMinifiedRecords(updateRecord)
+                        res.json(minifiedRecords)
                     }
                     
                 }else{
