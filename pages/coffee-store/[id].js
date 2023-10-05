@@ -11,11 +11,10 @@ import { fetcher, isEmpty } from "../../utils";
 import useSWR from "swr";
 
 /**
- * Discover-coffee-stores - version 4.03 -  coffee-store-page
+ * Discover-coffee-stores - version 4.04 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Fixing the voting count by the pasting exactly
- *        'favouriteCoffeStoresById' in the response
+ *    --> Changing initial state from 'votingCount' to '0'
  * 
  * Note: This was made next to the fetcher
  */
@@ -119,7 +118,7 @@ const CoffeStore = (initialProps) => {
     
     const { name, address, dma, imgUrl } = coffeeStore;
     
-    const [ votingCount, setVotingCount ] = useState(1);
+    const [ votingCount, setVotingCount ] = useState(0);
 
     const { data, error } = useSWR(`/api/getCoffeeStoreById?id=${id}`, fetcher);
 
