@@ -11,17 +11,17 @@ import { fetcher, isEmpty } from "../../utils";
 import useSWR from "swr";
 
 /**
- * Discover-coffee-stores - version 4.04 -  coffee-store-page
+ * Discover-coffee-stores - version 4.05 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Changing initial state from 'votingCount' to '0'
+ *    --> Clearing logs
  * 
  * Note: This was made next to the fetcher
  */
 
 export async function getStaticProps(staticProps) {
     const params = staticProps.params;
-    console.log("params", params);
+    //console.log("params", params);
   
     const coffeeStores = await fetchCoffeeStores();
     const findCoffeeStoreById = coffeeStores.find((coffeeStore) => {
@@ -90,7 +90,7 @@ const CoffeStore = (initialProps) => {
         });
         
         const dbCoffeeStore = await response.json();
-        console.log({ dbCoffeeStore });
+       // console.log({ dbCoffeeStore });
       } catch (err) {
         console.error("Error creating coffee store", err);
       }
@@ -124,7 +124,7 @@ const CoffeStore = (initialProps) => {
 
     useEffect(() => {
       if (data && data.length > 0) {
-        console.log('data from the SWR ==>', data)
+        //console.log('data from the SWR ==>', data)
         setCoffeeStore(data[0]);
         setVotingCount(data[0].vote);
       }
