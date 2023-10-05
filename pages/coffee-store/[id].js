@@ -7,21 +7,17 @@ import Image from "next/image";
 import cls from 'classnames'
 import { fetchCoffeeStores } from "../../lib/coffee.stores";
 import { useCoffeeStoresContext } from "../../context";
-import { isEmpty } from "../../utils";
+import { fetcher, isEmpty } from "../../utils";
 import useSWR from "swr";
 
 /**
- * Discover-coffee-stores - version 3.15 -  coffee-store-page
+ * Discover-coffee-stores - version 4.03 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Importing useSWR hook.
+ *    --> Fixing the voting count by the pasting exactly
+ *        'favouriteCoffeStoresById' in the response
  * 
- *    --> Implementing useSWR to optimize 'get' coffee store
- *        API
- * 
- * Note: This is made in order to store the data, and make 
- * the 'vote' persistent so i can get the value each time 
- * it gets updated
+ * Note: This was made next to the fetcher
  */
 
 export async function getStaticProps(staticProps) {
@@ -123,7 +119,7 @@ const CoffeStore = (initialProps) => {
     
     const { name, address, dma, imgUrl } = coffeeStore;
     
-    const [ voting, setVotingCount ] = useState(1);
+    const [ votingCount, setVotingCount ] = useState(1);
 
     const { data, error } = useSWR(`/api/getCoffeeStoreById?id=${id}`, fetcher);
 
@@ -131,21 +127,36 @@ const CoffeStore = (initialProps) => {
       if (data && data.length > 0) {
         console.log('data from the SWR ==>', data)
         setCoffeeStore(data[0]);
-        setVotingCount(data[0].voting);
+        setVotingCount(data[0].vote);
       }
     }, [data]);
-    
-    const handleUpvoteButton = () => {
-      console.log('up vote !!')
-      let count = voting + 1;
-      setVotingCount(count)
-  }
 
-  if (error) {
-    return <div>Something went wrong retrieving coffee store page</div>;
-  }
-
+    const handleUpvoteButton = async () => {
+      try {
+        const response = await fetch("/api/favouriteCoffeStoresById", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id,
+          }),
+        });
+  
+        const dbCoffeeStore = await response.json();
+  
+        if (dbCoffeeStore && dbCoffeeStore.length > 0) {
+          let count = votingCount + 1;
+          setVotingCount(count);
+        }
+      } catch (err) {
+        console.error("Error upvoting the coffee store", err);
+      }
+    };
     
+    if (error) {
+      return <div>Something went wrong retrieving coffee store page</div>;
+    }
     
     return(
       <div className={styles.layout}>
@@ -179,7 +190,7 @@ const CoffeStore = (initialProps) => {
                     </div>
                     <div className={styles.iconWrapper}>
                         <Image src="/statics/icons/star.svg" width="24" height="24"/>
-                        <p className={styles.text}>{voting}</p>
+                        <p className={styles.text}>{votingCount}</p>
                     </div>
 
                     <button className={styles.upvoteButton} onClick={handleUpvoteButton}>Up vote!!</button>
