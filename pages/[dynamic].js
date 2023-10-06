@@ -2,10 +2,10 @@ import { useRouter } from "next/router"
 import Head from 'next/head';
 
 /**
- * Discover-coffee-stores - version 1.02 -  DynamicRoute
+ * Discover-coffee-stores - version 4.06 -  DynamicRoute
  * - Fetaures:
  * 
- *    --> Building 'DynamicRoute' Component
+ *    --> Clearing logs
  * 
  * Note: By this route i can see how 'query' and 'router'
  * can modify values of the 'Head' ( a behavior similar 
@@ -17,7 +17,7 @@ const DynamicRoute = () => {
     const router = useRouter();
     const query = router.query.dynamic
 
-    console.log('value of the query => ', query)
+    //console.log('value of the query => ', query)
     /**as this log i know that the id match with 'dynamic' ( in 
      * fact is my [dynamic] defined as the name of the file) */
 
