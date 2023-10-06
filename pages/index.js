@@ -7,12 +7,10 @@ import useTrackLocation from '../hooks/use.track.location';
 import { useEffect, useState } from 'react';
 import { ACTION_TYPES, useCoffeeStoresContext } from '../context';
 /**
- * Discover-coffee-stores - version 2.14 -  Home page ( index js )
+ * Discover-coffee-stores - version 4.06 -  Home page ( index js )
  * - Fetaures:
  * 
- *    --> Invoking serveless function by fetching
- * 
- *    --> Interpolating the API
+ *    --> Clearing logs
  * 
  * Note: By implementing the action by the useReducer it makes 
  * the state of the view stores to maintain event when i go
@@ -45,7 +43,7 @@ export default function Home(props) {
   //const [ coffeeStores, setcoffeeStores ] = useState('');
   const [ coffeeStoresError, setCoffeeStoresError ] = useState(null);
    
-  console.log({ latLong, locationErrorMsg });
+  //console.log({ latLong, locationErrorMsg });
 
  useEffect(() => {
   async function setCoffeeStoresByLocation() {
@@ -54,7 +52,7 @@ export default function Home(props) {
         const response = await fetch(`/api/getCoffeStoresByLocation?latLong=${latLong}&limit=30`);
 
         const coffeeStores = await response.json()
-        console.log('fething coffee stores ==> ',{ response });
+        //console.log('fething coffee stores ==> ',{ response });
         //setcoffeeStores(fetchedCoffeeStores);
         dispatch({
           type: ACTION_TYPES.SET_COFFEE_STORES,
@@ -73,7 +71,7 @@ export default function Home(props) {
 }, [latLong]);
 
   const handleOnBannerBtnClick = () => {
-    console.log("hi banner button!!");
+    //console.log("hi banner button!!");
     handleTrackLocation();
   }
 
