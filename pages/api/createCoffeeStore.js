@@ -1,18 +1,18 @@
 import { findRecordByFilter, getMinifiedRecords, table } from "../../lib/airtable";
 /**
- * Discover-coffee-stores - version 3.14 -  coffee-store-page
+ * Discover-coffee-stores - version 4.06 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Implementing 'findRecordByFilter' to create a coffee store
+ *    --> Clearing logs
  * 
  * Note: This fix will verify the id before creating or finding
  * a coffee store
  */
 
-console.log({ table })
+//console.log({ table })
 
 const createCoffeeStore = async (req, res) => {
-    console.log({ table })
+    //console.log({ table })
 
     if (req.method === "POST") {
 
@@ -56,7 +56,7 @@ const createCoffeeStore = async (req, res) => {
                 res.json({ message: "Id is missing" });
             }
             } catch (err){
-                console.log('Error creating or finding store', err );
+                ('Error creating or finding store', err );
                 res.status(500);
                 res.json({ message: 'Error creating or finding store', err});
             } 
