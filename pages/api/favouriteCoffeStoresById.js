@@ -1,11 +1,10 @@
 import { findRecordByFilter, getMinifiedRecords, table } from "../../lib/airtable";
 
 /**
- * Discover-coffee-stores - version 4.02 -  favouriteCoffeStoresById
+ * Discover-coffee-stores - version 4.06 -  favouriteCoffeStoresById
  * - Fetaures:
  * 
- *    --> Minifying records to get the airtable 'recordId' with the 
- *        fields. 
+ *    --> Clearing logs
  * 
  * Note: This is been tested on 'postman' by hitting send with the API:
  * 
@@ -30,7 +29,7 @@ const favouriteCoffeStoresById = async (req, res) => {
 
                     const calculateVoting = parseInt(record.vote) + 1;
 
-                    console.log({ calculateVoting })
+                    //console.log({ calculateVoting })
 
                     //update a Record
 
