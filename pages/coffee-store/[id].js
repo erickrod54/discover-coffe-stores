@@ -11,10 +11,10 @@ import { fetcher, isEmpty } from "../../utils";
 import useSWR from "swr";
 
 /**
- * Discover-coffee-stores - version 4.05 -  coffee-store-page
+ * Discover-coffee-stores - version 4.07 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Clearing logs
+ *    --> Adding 'alt={props.name}' to image
  * 
  * Note: This was made next to the fetcher
  */
@@ -165,7 +165,7 @@ const CoffeStore = (initialProps) => {
             <div className={styles.container}>
                 <div className={styles.col1}>
                     <div className={styles.backToHomeLink}>
-                        <Image className={styles.arrow} src="/statics/icons/arrowBack.svg" width="24" height="24"/>
+                        <Image alt={props.name} className={styles.arrow} src="/statics/icons/arrowBack.svg" width="24" height="24"/>
                         <Link href="/">
                             Back to Home
                         </Link>
@@ -180,15 +180,15 @@ const CoffeStore = (initialProps) => {
                 </div>
                 <div className={cls("glass",styles.col2)}>
                     <div className={styles.iconWrapper}>
-                        <Image src="/statics/icons/nearMe.svg" width="24" height="24"/>
+                        <Image alt={props.name} src="/statics/icons/nearMe.svg" width="24" height="24"/>
                         <p className={styles.text}>{address}</p>
                     </div>
                     <div className={styles.iconWrapper}>
-                        <Image src="/statics/icons/places.svg" width="24" height="24"/>
+                        <Image alt={props.name} src="/statics/icons/places.svg" width="24" height="24"/>
                         <p className={styles.text}>{dma}</p>
                     </div>
                     <div className={styles.iconWrapper}>
-                        <Image src="/statics/icons/star.svg" width="24" height="24"/>
+                        <Image alt={props.name} src="/statics/icons/star.svg" width="24" height="24"/>
                         <p className={styles.text}>{votingCount}</p>
                     </div>
 
