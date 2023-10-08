@@ -11,12 +11,12 @@ import { fetcher, isEmpty } from "../../utils";
 import useSWR from "swr";
 
 /**
- * Discover-coffee-stores - version 4.07 -  coffee-store-page
+ * Discover-coffee-stores - version 4.08 -  coffee-store-page
  * - Fetaures:
  * 
- *    --> Adding 'alt={props.name}' to image
+ *    --> Adding meta tag for the single coffee store
  * 
- * Note: This was made next to the fetcher
+ * Note: This was made in order to improve the SEO
  */
 
 export async function getStaticProps(staticProps) {
@@ -161,6 +161,7 @@ const CoffeStore = (initialProps) => {
       <div className={styles.layout}>
             <Head>
                 <title>{name}</title>
+                <meta name="description" content={`${name} coffee store`}></meta>
             </Head>
             <div className={styles.container}>
                 <div className={styles.col1}>
