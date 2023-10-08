@@ -7,10 +7,10 @@ import useTrackLocation from '../hooks/use.track.location';
 import { useEffect, useState } from 'react';
 import { ACTION_TYPES, useCoffeeStoresContext } from '../context';
 /**
- * Discover-coffee-stores - version 4.06 -  Home page ( index js )
+ * Discover-coffee-stores - version 4.07 -  Home page ( index js )
  * - Fetaures:
  * 
- *    --> Clearing logs
+ *    --> Adding 'alt={props.name}' to every Image
  * 
  * Note: By implementing the action by the useReducer it makes 
  * the state of the view stores to maintain event when i go
@@ -88,7 +88,7 @@ export default function Home(props) {
         { locationErrorMsg && <p> Something went wrong: {locationErrorMsg} </p>}
         { coffeeStoresError && <p> Something went wrong: {coffeeStoresError}</p>}
         <div className={styles.heroImage}>
-          <Image src='/statics/hero_image.png' width={650} height={550}/>
+          <Image alt={props.name} src='/statics/hero_image.png' width={650} height={550}/>
         </div>
 
         {coffeeStores.length > 0 && (
